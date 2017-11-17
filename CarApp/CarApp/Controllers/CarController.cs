@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using CarApp.Repositories;
 using CarApp.Models;
 
@@ -13,7 +9,6 @@ namespace CarApp.Controllers
     public class CarController : Controller
     {
         CarRepository CarRepository;
-        Licence_plates licence_Plates;
 
         public CarController(CarRepository carRepository)
         {
@@ -34,16 +29,14 @@ namespace CarApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        [Route("/seach")]
-        public IActionResult SearchPlate(Licence_plates licence_PlateFromForm)
+        [HttpGet]
+        [Route("/search")]
+        public IActionResult SearchPlate([FromQuery] string plate)
         {
-            licence_Plates.Plate = licence_PlateFromForm.Plate;
-
             if (ModelState.IsValid)
             {
-                CarRepository.GetByPlate(licence_Plates.Plate);
-                return RedirectToAction("Result");
+                var selectedCar = CarRepository.GetCarByPlate(plate);
+                return View("Result", selectedCar);
             }
             else
             {
@@ -52,27 +45,24 @@ namespace CarApp.Controllers
         }
 
         [HttpGet]
-        [Route ("/searchpolice")]
-        public IActionResult SearchPolice([FromQuery] string police)
+        [Route ("/policecars")]
+        public IActionResult Police()
         {
-            CarRepository.GetPoliceCars();
-            return RedirectToAction("Result");
+            return View(CarRepository.GetPoliceCars());
         }
 
         [HttpGet]
-        [Route("/searchdiplomat")]
-        public IActionResult SearchDiplomat([FromQuery] string diplomat)
+        [Route("/diplomats")]
+        public IActionResult Diplomat()
         {
-            CarRepository.GetDiplomats();
-            return RedirectToAction("Result");
+            return View(CarRepository.GetDiplomats());
         }
 
         [HttpGet]
         [Route("/search/{brand}")]
         public IActionResult Brand([FromRoute] string brand)
         {
-            var brandToReturn = CarRepository.GetBrand(brand);
-            return View(brandToReturn);
+            return View(CarRepository.GetBrand(brand));
         }
 
         [HttpGet]

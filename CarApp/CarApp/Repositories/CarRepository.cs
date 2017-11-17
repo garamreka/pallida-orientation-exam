@@ -14,7 +14,7 @@ namespace CarApp.Repositories
             this.CarContext = carContext;
         }
 
-        public List<Licence_plates> GetByPlate(string plate)
+        public List<Licence_plates> GetCarByPlate(string plate)
         {
             return CarContext.Licence_plates.Where(p => p.Plate == plate).ToList();
         }
