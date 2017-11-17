@@ -19,6 +19,16 @@ namespace CarApp.Repositories
             return CarContext.Licence_plates.Where(p => p.Plate == plate).ToList();
         }
 
+        public List<Licence_plates> GetPoliceCars()
+        {
+            return CarContext.Licence_plates.Where(p => p.Plate.Contains("RB")).ToList();
+        }
+
+        public List<Licence_plates> GetDiplomats()
+        {
+            return CarContext.Licence_plates.Where(p => p.Plate.Contains("DT")).ToList();
+        }
+
         public List<Licence_plates> GetBrand(string brand)
         {
             return CarContext.Licence_plates.Where(p => p.Car_brand == brand).ToList();

@@ -13,6 +13,7 @@ namespace CarApp.Controllers
     public class CarController : Controller
     {
         CarRepository CarRepository;
+        Licence_plates licence_Plates;
 
         public CarController(CarRepository carRepository)
         {
@@ -21,9 +22,9 @@ namespace CarApp.Controllers
 
         [HttpGet]
         [Route ("")]
-        public IActionResult Form()
+        public IActionResult Form(Licence_plates licence_PlateFromForm)
         {
-            return View();
+            return View(licence_PlateFromForm);
         }
 
         [HttpGet]
@@ -33,13 +34,15 @@ namespace CarApp.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Route("/seachplate")]
-        public IActionResult SearchPlate([FromQuery] string plate)
+        [HttpPost]
+        [Route("/seach")]
+        public IActionResult SearchPlate(Licence_plates licence_PlateFromForm)
         {
+            licence_Plates.Plate = licence_PlateFromForm.Plate;
+
             if (ModelState.IsValid)
             {
-                CarRepository.GetByPlate(plate);
+                CarRepository.GetByPlate(licence_Plates.Plate);
                 return RedirectToAction("Result");
             }
             else
@@ -52,6 +55,7 @@ namespace CarApp.Controllers
         [Route ("/searchpolice")]
         public IActionResult SearchPolice([FromQuery] string police)
         {
+            CarRepository.GetPoliceCars();
             return RedirectToAction("Result");
         }
 
@@ -59,14 +63,16 @@ namespace CarApp.Controllers
         [Route("/searchdiplomat")]
         public IActionResult SearchDiplomat([FromQuery] string diplomat)
         {
+            CarRepository.GetDiplomats();
             return RedirectToAction("Result");
         }
 
         [HttpGet]
         [Route("/search/{brand}")]
-        public IActionResult SearchBrand([FromRoute] string brand)
+        public IActionResult Brand([FromRoute] string brand)
         {
-            return RedirectToAction("Result");
+            var brandToReturn = CarRepository.GetBrand(brand);
+            return View(brandToReturn);
         }
 
         [HttpGet]
@@ -74,7 +80,7 @@ namespace CarApp.Controllers
         public IActionResult ApiBrand([FromRoute] string brand)
         {
             var brandToReturn = CarRepository.GetBrand(brand);
-            return Json(new Json() { Data = brandToReturn });
+            return Json(new Response() { Data = brandToReturn });
         }
     }
 }

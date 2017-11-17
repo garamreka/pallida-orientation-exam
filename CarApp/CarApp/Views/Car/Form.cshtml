@@ -5,18 +5,15 @@
 </head>
 <body>
     <h1>Licence Plates</h1>
-    <p>Police Cars Only</p>
-    <p>Diplomats Only</p>
+    @Html.ActionLink("Police Cars Only", "SearchPolice", "Car") <br />
+    @Html.ActionLink("Diplomats", "SearchDiplomat", "Car")
 
-    @using (Html.BeginForm("SearchPlate", "Car"))
-            {
+    <form method="post" action="/seach">
         <p>
-            Search licence plate
-            @Html.TextBoxFor(model => model.Plate) @Html.ValidationMessageFor(model => model.Plate)
+            <label for="Plate">Search licence plate</label>
+            <input type="text" id="Plate" name="Licence_plates.Plate" />@Html.ValidationMessageFor(model => model.Plate)
         </p>
         <input type="submit" value="Search">
-
-       
-    }
+    </form>
 </body>
 </html>

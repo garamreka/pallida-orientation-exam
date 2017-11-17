@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CarApp.Models
 {
-    public class Json
+    public class Response
     {
         public string Result { get; set; } = "Ok";
         public Object Data { get; set; }
