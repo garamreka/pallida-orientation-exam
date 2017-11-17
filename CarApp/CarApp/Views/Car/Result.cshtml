@@ -1,0 +1,28 @@
+﻿@model List<CarApp.Models.Licence_plates>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Plates</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Color</th>
+            <th>Year</th>
+        </tr>
+        @*@foreach (var car in Model)
+            {
+                <tr>
+                    <td>@car.Plate</td>
+                    <td>@car.Car_brand</td>
+                    <td>@car.Car_model</td>
+                    <td>@car.Color</td>
+                    <td>@car.Year</td>
+                </tr>
+            }*@
+    </table>
+</body>
+</html>

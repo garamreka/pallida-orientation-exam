@@ -1,0 +1,22 @@
+﻿@model CarApp.Models.Licence_plates
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CarApp</title>
+</head>
+<body>
+    <h1>Licence Plates</h1>
+    <p>Police Cars Only</p>
+    <p>Diplomats Only</p>
+
+    @using (Html.BeginForm("SearchPlate", "Car"))
+            {
+        <p>
+            Search licence plate
+            @Html.TextBoxFor(model => model.Plate) @Html.ValidationMessageFor(model => model.Plate)
+        </p>
+        <input type="submit" value="Search">
+
+       
+    }
+</body>
+</html>
